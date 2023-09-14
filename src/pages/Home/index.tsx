@@ -1,23 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './index.module.css';
+import PostBox from 'components/PostBox';
 
 export default function Home() {
   return (
-    <div>
+    <>
       <header className={styles.header}>
-        <div>
+        <nav>
           <Link to="/posts/new">Write</Link>
           <Link to="/posts">Post</Link>
           <Link to="/profile">Profile</Link>
-        </div>
+        </nav>
       </header>
-      <div className={styles.postList}>Post list</div>
+      <nav className={styles.navigation}>
+        <div className={`${styles.navigationMenu}  ${styles.active}`}>All</div>
+        <div>My Posts</div>
+      </nav>
+      <ul className={styles.postList}>
+        {[...Array(10)].map((_, key) => (
+          <PostBox id={key} />
+        ))}
+      </ul>
       <footer className={styles.footer}>
-        <div>Menu 1</div>
-        <div>Menu 2</div>
-        <div>Menu 3</div>
+        <Link to="/posts/new">Write</Link>
+        <Link to="/posts">Post</Link>
+        <Link to="/profile">Profile</Link>
       </footer>
-    </div>
+    </>
   );
 }

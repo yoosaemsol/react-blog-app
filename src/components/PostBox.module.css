@@ -1,0 +1,51 @@
+.container {
+  padding: 24px 0px;
+  border-top: 1px solid var(--color-light-bg);
+}
+
+.profileBox {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  align-items: center;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  background: var(--color-light-bg);
+  border-radius: 50%;
+}
+
+.authorName,
+.postDate {
+  color: var(--color-text-level0);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 14px 0px;
+}
+
+.content {
+  color: var(--color-text-level1);
+  font-size: 16px;
+}
+
+.utilBox {
+  display: flex;
+  gap: 8px;
+  flex-direction: row-reverse;
+  font-size: 14px;
+}
+
+.button {
+  cursor: pointer;
+  color: var(--color-text-level0);
+}
+
+.button:hover,
+.button:focus {
+  color: var(--color-active);
+}
