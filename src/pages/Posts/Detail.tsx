@@ -1,5 +1,6 @@
 import AuthorProfile from 'components/AuthorProfile';
 import { Page } from 'components/ui';
+import { Link } from 'react-router-dom';
 import styles from './Detail.module.css';
 
 export default function Detail() {
@@ -11,7 +12,9 @@ export default function Detail() {
       <AuthorProfile />
       <div className={styles.utilBox}>
         <div className={styles.button}>Delete</div>
-        <div className={styles.button}>Edit</div>
+        <div className={styles.button}>
+          <Link to={`/posts/edit/1`}>Edit</Link>
+        </div>
       </div>
       <p className={styles.content}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel
