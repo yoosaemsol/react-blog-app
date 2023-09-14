@@ -1,0 +1,18 @@
+.profileBox {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  align-items: center;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  background: var(--color-light-bg);
+  border-radius: 50%;
+}
+
+.authorName,
+.postDate {
+  color: var(--color-text-level0);
+}

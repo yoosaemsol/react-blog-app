@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import AuthorProfile from './AuthorProfile';
 import styles from './PostBox.module.css';
 
 interface IPostBox {
@@ -9,11 +10,7 @@ interface IPostBox {
 export default function PostBox({ id }: IPostBox) {
   return (
     <li className={styles.container}>
-      <div className={styles.profileBox}>
-        <div className={styles.avatar} />
-        <p className={styles.authorName}>John Doe</p>
-        <p className={styles.postDate}>2023.09.14</p>
-      </div>
+      <AuthorProfile />
       <Link to={`/posts/${id}`}>
         <h3 className={styles.title}>Post {id}</h3>
         <p className={styles.content}>
