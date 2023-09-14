@@ -1,5 +1,10 @@
-import React from 'react';
+import PostForm from 'components/PostForm';
+import { Page } from 'components/ui';
 
 export default function New() {
-  return <h1>Post New Page</h1>;
+  return (
+    <Page>
+      <PostForm />
+    </Page>
+  );
 }
