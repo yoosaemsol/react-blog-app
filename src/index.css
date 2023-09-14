@@ -1,6 +1,7 @@
 :root {
   --color-active: #292b2c;
   --color-light-bg: #f2f2f2;
+  --color-border-light: lightgray;
   --color-text-level0: #808080;
   --color-text-level1: #696969;
 }
@@ -29,7 +30,7 @@ a {
     Helvetica Neue, Arial, sans-serif;
   letter-spacing: -0.01em;
   color: #292b2c;
-  /* box-sizing: border-box; */
+  box-sizing: border-box;
 }
 
 ul {
@@ -39,4 +40,9 @@ ul {
 
 p {
   margin: 0px;
+}
+
+button {
+  outline: none;
+  border: none;
 }
