@@ -1,9 +1,10 @@
 import AuthorProfile from 'components/AuthorProfile';
+import { Page } from 'components/ui';
 import styles from './Detail.module.css';
 
 export default function Detail() {
   return (
-    <section className={styles.container}>
+    <Page>
       <h3 className={styles.title}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       </h3>
@@ -23,6 +24,6 @@ export default function Detail() {
         accumsan in eget elit. Pellentesque pellentesque est lectus, sit amet
         ultrices purus elementum posuere. Phasellus vel lobortis neque.
       </p>
-    </section>
+    </Page>
   );
 }
