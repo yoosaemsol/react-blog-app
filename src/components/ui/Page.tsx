@@ -5,14 +5,19 @@ import styles from './Page.module.css';
 
 interface IPage {
   children: ReactNode;
+  center?: boolean;
 }
 
-export default function Page({ children }: IPage) {
+export default function Page({ center, children }: IPage) {
   const location = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
 
-  return <section className={styles.container}>{children}</section>;
+  return (
+    <section className={`${styles.container} ${center && styles.center}`}>
+      {children}
+    </section>
+  );
 }
