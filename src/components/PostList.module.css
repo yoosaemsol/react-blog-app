@@ -1,0 +1,26 @@
+/* post filter */
+.filter {
+  display: flex;
+  gap: 12px;
+  margin: 0 auto;
+  max-width: 680px;
+  font-style: 16px;
+  color: var(--color-text-level0);
+  padding: 48px 20px 0px 20px;
+}
+
+.filterItem {
+  cursor: pointer;
+}
+
+.filterItem.active {
+  color: var(--color-active);
+  font-weight: 600;
+}
+
+/* post list */
+.postList {
+  padding: 20px;
+  text-align: left;
+  line-height: 24px;
+}

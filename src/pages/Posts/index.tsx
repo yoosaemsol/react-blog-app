@@ -1,5 +1,10 @@
-import React from 'react';
+import PostList from 'components/PostList';
+import { Page } from 'components/ui';
 
-export default function PostList() {
-  return <h1>Post List Page</h1>;
+export default function Posts() {
+  return (
+    <Page>
+      <PostList />
+    </Page>
+  );
 }

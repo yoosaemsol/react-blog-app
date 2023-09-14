@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Home from 'pages/Home';
-import PostList from 'pages/Posts';
+import Posts from 'pages/Posts';
 import Detail from 'pages/Posts/Detail';
 import New from 'pages/Posts/New';
 import Edit from 'pages/Posts/Edit';
@@ -14,7 +14,7 @@ export default function Router() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="posts" element={<PostList />} />
+        <Route path="posts" element={<Posts />} />
         <Route path="posts/:id" element={<Detail />} />
         <Route path="posts/new" element={<New />} />
         <Route path="posts/edit/:id" element={<Edit />} />

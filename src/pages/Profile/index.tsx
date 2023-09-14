@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { Page } from 'components/ui';
 import styles from './index.module.css';
+import PostList from 'components/PostList';
 
 export default function Profile() {
   return (
@@ -18,6 +19,7 @@ export default function Profile() {
           Logout
         </Link>
       </div>
+      <PostList onFilter={false} />
     </Page>
   );
 }
