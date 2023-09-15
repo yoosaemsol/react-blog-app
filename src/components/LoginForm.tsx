@@ -1,9 +1,11 @@
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { login } from 'api/firebase';
 
 import styles from './LoginForm.module.css';
 
 export default function LoginForm() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -12,7 +14,14 @@ export default function LoginForm() {
     mode: 'onSubmit',
   });
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      const user = await login(data.email, data.password);
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+    }
+  });
 
   return (
     <form
@@ -42,7 +51,7 @@ export default function LoginForm() {
       </div>
       <div className={styles.block}>
         <p>
-          Don't you have an account?{' '}
+          Don't you have an account?
           <Link className={styles.link} to="/signup">
             Sign up
           </Link>

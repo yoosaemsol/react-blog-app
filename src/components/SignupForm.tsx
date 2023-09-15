@@ -1,9 +1,13 @@
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+
+import { signup } from 'api/firebase';
 
 import styles from './SignupForm.module.css';
 
 export default function SignupForm() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -12,15 +16,20 @@ export default function SignupForm() {
     mode: 'onSubmit',
   });
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      const user = await signup(data.email, data.password);
+      if (user) {
+        navigate('/');
+      }
+    } catch (errorMessage: any) {
+      console.error(errorMessage);
+      //auth/email-already-in-use
+    }
+  });
 
   return (
-    <form
-      onSubmit={onSubmit}
-      action="/post"
-      method="POST"
-      className={styles.form}
-    >
+    <form onSubmit={onSubmit} className={styles.form}>
       <h1 className={styles.title}>Sign up</h1>
       <div className={styles.block}>
         <label htmlFor="email">Email</label>

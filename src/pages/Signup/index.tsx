@@ -1,5 +1,5 @@
-import { Page } from 'components/ui';
 import SignupForm from 'components/SignupForm';
+import { Page } from 'components/ui';
 
 export default function Signup() {
   return (
