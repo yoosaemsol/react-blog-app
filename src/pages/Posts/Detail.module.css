@@ -28,3 +28,9 @@
   line-height: 24px;
   white-space: pre-wrap;
 }
+
+.updatedAt {
+  text-align: right;
+  font-size: 13px;
+  color: var(--color-text-level0);
+}

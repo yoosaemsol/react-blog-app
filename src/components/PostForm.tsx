@@ -1,35 +1,68 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useAuthContext } from 'context/AuthContext';
-import { useCreatePost } from 'hooks/api';
+import { useCreatePost, useGetPost, useUpdatePost } from 'hooks/api';
 
 import styles from './PostForm.module.css';
 
 export default function PostForm() {
+  const { mutateAsync: createPost, isLoading } = useCreatePost();
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
+
+  const params = useParams();
+
+  const postId = params.id as string;
+
+  const { data: post } = useGetPost(postId, {
+    enabled: !!postId,
+  });
+
+  const { mutateAsync: updatePost, isLoading: updateLoading } =
+    useUpdatePost(postId);
+
   const {
     register,
     handleSubmit,
     // formState: { errors },
+    setValue,
   } = useForm({
     mode: 'onSubmit',
   });
 
-  const { mutateAsync: createPost, isLoading } = useCreatePost();
-  const { user } = useAuthContext();
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (postId && post) {
+      setValue('title', post.title);
+      setValue('summary', post.summary);
+      setValue('content', post.content);
+    }
+  }, [postId, post, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
     const { title, summary, content } = data;
 
     try {
-      const res = await createPost({
-        title,
-        summary,
-        content,
-        email: user?.email || '',
-      });
+      if (post) {
+        // update post
+        await updatePost({
+          title,
+          summary,
+          content,
+        });
 
-      navigate(`/posts/${res.id}`);
+        navigate(`/posts/${postId}`);
+      } else {
+        // create post
+        const res = await createPost({
+          title,
+          summary,
+          content,
+          email: user?.email || '',
+        });
+
+        navigate(`/posts/${res.id}`);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -65,8 +98,12 @@ export default function PostForm() {
         <textarea id="content" {...register('content', { required: true })} />
       </div>
 
-      <button disabled={isLoading} className={styles.submitBtn}>
-        {isLoading ? 'loading...' : 'Submit'}
+      <button
+        disabled={isLoading || updateLoading}
+        className={styles.submitBtn}
+      >
+        {postId && (updateLoading ? 'loading...' : 'Update')}
+        {!postId && (isLoading ? 'loading...' : 'Submit')}
       </button>
     </form>
   );

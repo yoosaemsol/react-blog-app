@@ -1,8 +1,7 @@
-import { useAuthContext } from 'context/AuthContext';
-import { PostProps } from 'hooks/api/Post/useGetPosts';
-import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from 'context/AuthContext';
 import AuthorProfile from './AuthorProfile';
+import { PostProps } from 'hooks/api/Post/useGetPosts';
 import styles from './PostBox.module.css';
 
 interface PostBoxProps {
@@ -23,7 +22,9 @@ export default function PostBox({ post }: PostBoxProps) {
       {user?.email === email && (
         <div className={styles.utilBox}>
           <div className={styles.button}>Delete</div>
-          <div className={styles.button}>Edit</div>
+          <div className={styles.button}>
+            <Link to={`/posts/edit/${id}`}>Edit</Link>
+          </div>
         </div>
       )}
     </li>

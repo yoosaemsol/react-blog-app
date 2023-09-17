@@ -9,8 +9,10 @@ export default function Detail() {
   const params = useParams();
   const { user } = useAuthContext();
 
-  const { data: post } = useGetPost(params.id || '', {
-    enabled: !!params.id,
+  const postId = params.id as string;
+
+  const { data: post } = useGetPost(postId, {
+    enabled: !!postId,
   });
 
   return (
@@ -19,11 +21,14 @@ export default function Detail() {
       <AuthorProfile author={post?.email} createdAt={post?.createdAt} />
       {user?.email === post?.email && (
         <div className={styles.utilBox}>
-          <div className={styles.button}>Delete</div>
           <div className={styles.button}>
-            <Link to={`/posts/edit/1`}>Edit</Link>
+            <Link to={`/posts/edit/${postId}`}>Edit</Link>
           </div>
+          <div className={styles.button}>Delete</div>
         </div>
+      )}
+      {post?.updatedAt && (
+        <p className={styles.updatedAt}>{`Last Edited : ${post?.updatedAt}`}</p>
       )}
       <p className={styles?.content}>{post?.content}</p>
     </Page>
