@@ -1,8 +1,8 @@
 import styles from './AuthorProfile.module.css';
 
 interface AuthorProfileProps {
-  author?: string;
-  createdAt?: string;
+  author: string;
+  createdAt: string;
 }
 export default function AuthorProfile({
   author,

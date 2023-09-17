@@ -26,4 +26,5 @@
 .content {
   padding: 20px 0px;
   line-height: 24px;
+  white-space: pre-wrap;
 }

@@ -15,8 +15,8 @@ export default function PostBox({ post }: PostBoxProps) {
 
   return (
     <li className={styles.container}>
+      <AuthorProfile author={email} createdAt={createdAt} />
       <Link to={`/posts/${id}`}>
-        <AuthorProfile author={email} createdAt={createdAt} />
         <h3 className={styles.title}>{title}</h3>
         <p className={styles.content}>{summary}</p>
       </Link>
