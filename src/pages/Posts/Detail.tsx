@@ -1,8 +1,9 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useAuthContext } from 'context/AuthContext';
 import AuthorProfile from 'components/AuthorProfile';
 import { Page } from 'components/ui';
-import { useGetPost } from 'hooks/api';
+
+import { useGetPost, useDeletePost } from 'hooks/api';
 import styles from './Detail.module.css';
 
 export default function Detail() {
@@ -15,6 +16,10 @@ export default function Detail() {
     enabled: !!postId,
   });
 
+  const navigate = useNavigate();
+
+  const { mutateAsync: deletePost } = useDeletePost(postId);
+
   return (
     <Page>
       <h3 className={styles.title}>{post?.title}</h3>
@@ -24,7 +29,19 @@ export default function Detail() {
           <div className={styles.button}>
             <Link to={`/posts/edit/${postId}`}>Edit</Link>
           </div>
-          <div className={styles.button}>Delete</div>
+          <div
+            className={styles.button}
+            onClick={async () => {
+              if (
+                window.confirm('Are you sure you want to delete this post?')
+              ) {
+                await deletePost();
+                navigate('/');
+              }
+            }}
+          >
+            Delete
+          </div>
         </div>
       )}
       {post?.updatedAt && (
