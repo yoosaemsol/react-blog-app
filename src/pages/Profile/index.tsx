@@ -34,7 +34,7 @@ export default function Profile() {
           Logout
         </div>
       </div>
-      <PostList onFilter={false} />
+      <PostList onFilter={false} defaultFilter="my" />
     </Page>
   );
 }

@@ -1,7 +1,7 @@
 /* post filter */
 .filter {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   margin: 0 auto;
   max-width: 680px;
   font-style: 16px;
@@ -11,11 +11,23 @@
 
 .filterItem {
   cursor: pointer;
+  box-sizing: content-box;
+  padding: 2px 5px;
+  width: fit-content;
+  user-select: none;
 }
 
 .filterItem.active {
   color: var(--color-active);
   font-weight: 600;
+  background-color: var(--color-light-bg);
+  border-radius: 5px;
+}
+
+.divider {
+  width: 1.5px;
+  height: 20px;
+  background-color: var(--color-border-light);
 }
 
 /* post list */

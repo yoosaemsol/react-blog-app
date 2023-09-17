@@ -1,6 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { collection, getDocs, orderBy, query } from '@firebase/firestore';
+import {
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from '@firebase/firestore';
 import { db } from 'api/firebase';
+import { CategoryType, FilterType } from 'components/PostList';
 
 export interface PostProps {
   title: string;
@@ -11,13 +18,36 @@ export interface PostProps {
   email: string;
 }
 
-const useGetPosts = (options?: any) => {
+interface getPostQuery {
+  userId?: string;
+  activeFilter?: CategoryType | FilterType;
+}
+
+const useGetPosts = (customQuery?: getPostQuery, options?: any) => {
   return useQuery<PostProps[], Error>(
-    ['posts'],
+    ['posts', customQuery],
     async () => {
       const postsRef = collection(db, 'posts');
 
-      const q = query(postsRef, orderBy('createdAt', 'desc'));
+      let q = query(postsRef, orderBy('createdAt', 'desc'));
+
+      if (customQuery?.activeFilter === 'my' && customQuery?.userId) {
+        q = query(
+          postsRef,
+          where('email', '==', customQuery.userId),
+          orderBy('createdAt', 'desc')
+        );
+      } else if (
+        customQuery?.activeFilter !== 'my' &&
+        customQuery?.activeFilter !== 'all'
+      ) {
+        q = query(
+          postsRef,
+          where('category', '==', customQuery?.activeFilter),
+          orderBy('createdAt', 'desc')
+        );
+      }
+
       const data = await getDocs(q);
       const dataList: any[] = [];
 

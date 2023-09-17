@@ -1,21 +1,38 @@
 import { useState } from 'react';
-
-import PostBox from 'components/PostBox';
-
-import styles from './PostList.module.css';
-import { useGetPosts } from 'hooks/api';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from 'context/AuthContext';
+import PostBox from 'components/PostBox';
+import { useGetPosts } from 'hooks/api';
+import styles from './PostList.module.css';
 
 interface PostListProps {
   onFilter?: boolean;
+  defaultFilter?: FilterType | CategoryType;
 }
 
-type FilterType = 'all' | 'my';
+export type FilterType = 'all' | 'my';
 
-export default function PostList({ onFilter = true }: PostListProps) {
-  const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+export type CategoryType = 'Frontend' | 'Backend' | 'Web' | 'Native';
 
-  const { data: posts, isLoading } = useGetPosts();
+export const CATEGORIES: CategoryType[] = [
+  'Frontend',
+  'Backend',
+  'Web',
+  'Native',
+];
+
+export default function PostList({
+  onFilter = true,
+  defaultFilter = 'all',
+}: PostListProps) {
+  const [activeFilter, setActiveFilter] =
+    useState<FilterType | CategoryType>(defaultFilter);
+  const { user } = useAuthContext();
+  const userId = user?.email || '';
+  const { data: posts, isLoading } = useGetPosts({
+    userId: activeFilter === 'my' ? userId : undefined,
+    activeFilter,
+  });
 
   if (isLoading) {
     <p>...loading</p>;
@@ -43,6 +60,19 @@ export default function PostList({ onFilter = true }: PostListProps) {
           >
             My Posts
           </li>
+          <div className={styles.divider} />
+          {CATEGORIES?.map((category) => (
+            <li
+              key={category}
+              role="presentation"
+              className={`${styles.filterItem}  ${
+                activeFilter === category && styles.active
+              }`}
+              onClick={() => setActiveFilter(category)}
+            >
+              {category}
+            </li>
+          ))}
         </ul>
       )}
       {!!posts?.length && (
