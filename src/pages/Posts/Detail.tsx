@@ -5,6 +5,7 @@ import { Page } from 'components/ui';
 
 import { useGetPost, useDeletePost } from 'hooks/api';
 import styles from './Detail.module.css';
+import formatTimestamp from 'utils/formatTimestamp';
 
 export default function Detail() {
   const params = useParams();
@@ -45,7 +46,9 @@ export default function Detail() {
         </div>
       )}
       {post?.updatedAt && (
-        <p className={styles.updatedAt}>{`Last Edited : ${post?.updatedAt}`}</p>
+        <p className={styles.updatedAt}>{`Last Edited : ${formatTimestamp(
+          post?.updatedAt
+        )}`}</p>
       )}
       <p className={styles?.content}>{post?.content}</p>
     </Page>

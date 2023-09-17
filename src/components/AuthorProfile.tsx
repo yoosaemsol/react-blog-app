@@ -1,4 +1,5 @@
 import styles from './AuthorProfile.module.css';
+import formatTimestamp from 'utils/formatTimestamp';
 
 interface AuthorProfileProps {
   author: string;
@@ -12,7 +13,7 @@ export default function AuthorProfile({
     <div className={styles.profileBox}>
       <div className={styles.avatar} />
       <p className={styles.authorName}>{author}</p>
-      <p className={styles.postDate}>{createdAt}</p>
+      <p className={styles.postDate}>{formatTimestamp(createdAt)}</p>
     </div>
   );
 }

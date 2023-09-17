@@ -20,7 +20,7 @@ export const useUpdatePost = (
         title,
         summary,
         content,
-        updatedAt: new Date()?.toLocaleString(),
+        updatedAt: new Date().toISOString(),
       });
     },
     {

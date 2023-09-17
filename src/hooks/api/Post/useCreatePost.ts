@@ -18,7 +18,7 @@ export const useCreatePost = (
         title,
         summary,
         content,
-        createdAt: new Date()?.toLocaleString(),
+        createdAt: new Date().toISOString(),
         email,
       });
 
