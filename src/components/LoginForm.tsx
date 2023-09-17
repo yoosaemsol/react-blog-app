@@ -1,18 +1,33 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { login } from 'api/firebase';
 
 import styles from './LoginForm.module.css';
+
+const loginSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Please enter a valid email')
+    .required('Email is required.'),
+  password: yup
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .required('Password is required.'),
+});
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    // formState: { errors },
+    formState: { errors },
   } = useForm({
+    //@ts-ignore
+    resolver: yupResolver(loginSchema),
     mode: 'onSubmit',
   });
 
@@ -45,6 +60,9 @@ export default function LoginForm() {
           required
           {...register('email', { required: true })}
         />
+        {errors?.email?.message && (
+          <p className={styles.error}>{String(errors.email.message)}</p>
+        )}
       </div>
       <div className={styles.block}>
         <label htmlFor="password">Password</label>
@@ -54,6 +72,9 @@ export default function LoginForm() {
           required
           {...register('password', { required: true })}
         />
+        {errors?.password?.message && (
+          <p className={styles.error}>{String(errors.password.message)}</p>
+        )}
       </div>
       <div className={styles.block}>
         <p>

@@ -56,3 +56,11 @@
 .LoginBtn:hover {
   filter: brightness(120%);
 }
+
+.error {
+  font-size: 13px;
+  padding-top: 10px;
+  padding-left: 10px;
+  font-weight: 500;
+  color: var(--color-warning);
+}
