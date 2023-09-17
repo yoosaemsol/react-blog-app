@@ -3,6 +3,8 @@ import { useState } from 'react';
 import PostBox from 'components/PostBox';
 
 import styles from './PostList.module.css';
+import { useGetPosts } from 'hooks/api';
+import { Link } from 'react-router-dom';
 
 interface PostListProps {
   onFilter?: boolean;
@@ -12,6 +14,12 @@ type FilterType = 'all' | 'my';
 
 export default function PostList({ onFilter = true }: PostListProps) {
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+
+  const { data: posts, isLoading } = useGetPosts();
+
+  if (isLoading) {
+    <p>...loading</p>;
+  }
 
   return (
     <section>
@@ -37,11 +45,20 @@ export default function PostList({ onFilter = true }: PostListProps) {
           </li>
         </ul>
       )}
-      <ul className={styles.postList}>
-        {[...Array(10)].map((_, key) => (
-          <PostBox key={key} id={key} />
-        ))}
-      </ul>
+      {!!posts?.length && (
+        <ul className={styles.postList}>
+          {posts?.map((post) => (
+            <PostBox post={post} key={post.id} />
+          ))}
+        </ul>
+      )}
+      {posts?.length === 0 && (
+        <div className={styles.noPosts}>
+          <p>No Posts</p>
+
+          <Link to="/posts/new">Let's write your first post</Link>
+        </div>
+      )}
     </section>
   );
 }

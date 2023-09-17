@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 export let app: FirebaseApp;
 let auth: any;
@@ -28,6 +29,8 @@ try {
 
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
+
+export const db = getFirestore(app);
 
 export default firebase;
 

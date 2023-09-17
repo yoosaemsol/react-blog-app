@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from 'context/AuthContext';
 import { ToastContainer } from 'react-toastify';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,13 +13,17 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+const queryClient = new QueryClient();
+
 root.render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AuthContextProvider>
-    <ToastContainer />
+    <QueryClientProvider client={queryClient}>
+      <AuthContextProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AuthContextProvider>
+      <ToastContainer />
+    </QueryClientProvider>
   </React.StrictMode>
 );
