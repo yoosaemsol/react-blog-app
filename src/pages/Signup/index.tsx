@@ -1,5 +1,10 @@
-import React from 'react';
+import SignupForm from 'components/SignupForm';
+import { Page } from 'components/ui';
 
 export default function Signup() {
-  return <h1>Signup</h1>;
+  return (
+    <Page center>
+      <SignupForm />
+    </Page>
+  );
 }

@@ -4,3 +4,10 @@
   margin: 0 auto;
   padding: 20px;
 }
+
+.container.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

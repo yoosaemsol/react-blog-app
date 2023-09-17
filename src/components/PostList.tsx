@@ -39,7 +39,7 @@ export default function PostList({ onFilter = true }: PostListProps) {
       )}
       <ul className={styles.postList}>
         {[...Array(10)].map((_, key) => (
-          <PostBox id={key} />
+          <PostBox key={key} id={key} />
         ))}
       </ul>
     </section>
