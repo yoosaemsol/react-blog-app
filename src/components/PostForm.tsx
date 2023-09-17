@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useAuthContext } from 'context/AuthContext';
+import { useCreatePost } from 'hooks/api';
 
 import styles from './PostForm.module.css';
 
@@ -11,7 +14,20 @@ export default function PostForm() {
     mode: 'onSubmit',
   });
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const { mutateAsync: createPost, isLoading } = useCreatePost();
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
+
+  const onSubmit = handleSubmit(async (data) => {
+    const { title, summary, content } = data;
+
+    try {
+      await createPost({ title, summary, content, email: user?.email || '' });
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+    }
+  });
 
   return (
     <form
@@ -43,7 +59,9 @@ export default function PostForm() {
         <textarea id="content" {...register('content', { required: true })} />
       </div>
 
-      <button className={styles.submitBtn}>Submit</button>
+      <button disabled={isLoading} className={styles.submitBtn}>
+        {isLoading ? 'loading...' : 'Submit'}
+      </button>
     </form>
   );
 }

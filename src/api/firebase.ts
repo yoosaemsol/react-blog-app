@@ -30,7 +30,7 @@ try {
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 export default firebase;
 
