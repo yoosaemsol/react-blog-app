@@ -22,8 +22,14 @@ export default function PostForm() {
     const { title, summary, content } = data;
 
     try {
-      await createPost({ title, summary, content, email: user?.email || '' });
-      navigate('/');
+      const res = await createPost({
+        title,
+        summary,
+        content,
+        email: user?.email || '',
+      });
+
+      navigate(`/posts/${res.id}`);
     } catch (error) {
       console.error(error);
     }
