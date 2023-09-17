@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { collection, getDocs } from '@firebase/firestore';
+import { collection, getDocs, orderBy, query } from '@firebase/firestore';
 import { db } from 'api/firebase';
 
 export interface PostProps {
@@ -15,14 +15,29 @@ const useGetPosts = (options?: any) => {
   return useQuery<PostProps[], Error>(
     ['posts'],
     async () => {
-      const querySnapshot = await getDocs(collection(db, 'posts'));
+      const postsRef = collection(db, 'posts');
+
+      const q = query(postsRef, orderBy('createdAt', 'desc'));
+      const data = await getDocs(q);
       const dataList: any[] = [];
 
-      querySnapshot?.forEach((doc) => {
-        dataList.push({ ...doc.data(), id: doc.id });
+      data.docs.forEach((doc) => {
+        dataList.push({
+          ...doc.data(),
+          id: doc.id,
+        });
       });
 
       return dataList;
+
+      // const querySnapshot = await getDocs(collection(db, 'posts'));
+      // const dataList: any[] = [];
+
+      // querySnapshot?.forEach((doc) => {
+      //   dataList.push({ ...doc.data(), id: doc.id });
+      // });
+
+      // return dataList;
     },
     {
       ...options,
