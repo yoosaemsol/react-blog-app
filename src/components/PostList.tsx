@@ -7,20 +7,31 @@ import styles from './PostList.module.css';
 
 interface PostListProps {
   onFilter?: boolean;
-  defaultFilter?: 'all' | 'my';
+  defaultFilter?: FilterType | CategoryType;
 }
 
-type FilterType = 'all' | 'my';
+export type FilterType = 'all' | 'my';
+
+export type CategoryType = 'Frontend' | 'Backend' | 'Web' | 'Native';
+
+export const CATEGORIES: CategoryType[] = [
+  'Frontend',
+  'Backend',
+  'Web',
+  'Native',
+];
 
 export default function PostList({
   onFilter = true,
   defaultFilter = 'all',
 }: PostListProps) {
-  const [activeFilter, setActiveFilter] = useState<FilterType>(defaultFilter);
+  const [activeFilter, setActiveFilter] =
+    useState<FilterType | CategoryType>(defaultFilter);
   const { user } = useAuthContext();
   const userId = user?.email || '';
   const { data: posts, isLoading } = useGetPosts({
     userId: activeFilter === 'my' ? userId : undefined,
+    activeFilter,
   });
 
   if (isLoading) {
@@ -49,6 +60,19 @@ export default function PostList({
           >
             My Posts
           </li>
+          <div className={styles.divider} />
+          {CATEGORIES?.map((category) => (
+            <li
+              key={category}
+              role="presentation"
+              className={`${styles.filterItem}  ${
+                activeFilter === category && styles.active
+              }`}
+              onClick={() => setActiveFilter(category)}
+            >
+              {category}
+            </li>
+          ))}
         </ul>
       )}
       {!!posts?.length && (

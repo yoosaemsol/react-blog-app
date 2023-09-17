@@ -7,6 +7,7 @@ import {
   where,
 } from '@firebase/firestore';
 import { db } from 'api/firebase';
+import { CategoryType, FilterType } from 'components/PostList';
 
 export interface PostProps {
   title: string;
@@ -19,7 +20,7 @@ export interface PostProps {
 
 interface getPostQuery {
   userId?: string;
-  category?: 'Frontend' | 'Backend' | 'Web' | 'Native';
+  activeFilter?: CategoryType | FilterType;
 }
 
 const useGetPosts = (customQuery?: getPostQuery, options?: any) => {
@@ -30,10 +31,19 @@ const useGetPosts = (customQuery?: getPostQuery, options?: any) => {
 
       let q = query(postsRef, orderBy('createdAt', 'desc'));
 
-      if (customQuery?.userId) {
+      if (customQuery?.activeFilter === 'my' && customQuery?.userId) {
         q = query(
           postsRef,
           where('email', '==', customQuery.userId),
+          orderBy('createdAt', 'desc')
+        );
+      } else if (
+        customQuery?.activeFilter !== 'my' &&
+        customQuery?.activeFilter !== 'all'
+      ) {
+        q = query(
+          postsRef,
+          where('category', '==', customQuery?.activeFilter),
           orderBy('createdAt', 'desc')
         );
       }

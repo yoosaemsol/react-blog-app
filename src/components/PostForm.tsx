@@ -5,6 +5,7 @@ import { useAuthContext } from 'context/AuthContext';
 import { useCreatePost, useGetPost, useUpdatePost } from 'hooks/api';
 
 import styles from './PostForm.module.css';
+import { CATEGORIES } from './PostList';
 
 export default function PostForm() {
   const { mutateAsync: createPost, isLoading } = useCreatePost();
@@ -36,11 +37,12 @@ export default function PostForm() {
       setValue('title', post.title);
       setValue('summary', post.summary);
       setValue('content', post.content);
+      setValue('category', post.category);
     }
   }, [postId, post, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
-    const { title, summary, content } = data;
+    const { title, summary, content, category } = data;
 
     try {
       if (post) {
@@ -49,6 +51,7 @@ export default function PostForm() {
           title,
           summary,
           content,
+          category,
         });
 
         navigate(`/posts/${postId}`);
@@ -59,6 +62,7 @@ export default function PostForm() {
           summary,
           content,
           email: user?.email || '',
+          category,
         });
 
         navigate(`/posts/${res.id}`);
@@ -83,6 +87,21 @@ export default function PostForm() {
           required
           {...register('title', { required: true })}
         />
+      </div>
+      <div className={styles.block}>
+        <label htmlFor="category">Category</label>
+        <select id="category" {...register('category')}>
+          <option value="">Please select a category</option>
+          {CATEGORIES.map((category) => {
+            return <option key={category}>{category}</option>;
+          })}
+        </select>
+        {/* <input
+          type="text"
+          id="category"
+          required
+          {...register('category', { required: true })}
+        /> */}
       </div>
       <div className={styles.block}>
         <label htmlFor="summary">Summary</label>
