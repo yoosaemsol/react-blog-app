@@ -3,6 +3,7 @@ import { logout } from 'api/firebase';
 import PostList from 'components/PostList';
 import { Page } from 'components/ui';
 import styles from './index.module.css';
+import { toast } from 'react-toastify';
 
 export default function Profile() {
   const { user } = useAuthContext();
@@ -21,9 +22,10 @@ export default function Profile() {
           onClick={async () => {
             try {
               await logout();
-              console.log('login success');
+              toast.success('LOGOUT SUCCESSFUL', { hideProgressBar: true });
             } catch (e: any) {
-              console.error(e);
+              toast.error(e.message);
+              console.error(e.message);
             }
           }}
           role="presentation"

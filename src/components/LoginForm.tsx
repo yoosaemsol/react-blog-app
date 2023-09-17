@@ -1,5 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+
 import { login } from 'api/firebase';
 
 import styles from './LoginForm.module.css';
@@ -17,9 +19,13 @@ export default function LoginForm() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       const user = await login(data.email, data.password);
-      navigate('/');
-    } catch (error) {
-      console.error(error);
+      if (user) {
+        toast.success('LOGIN SUCCESSFUL', { hideProgressBar: true });
+        navigate('/');
+      }
+    } catch (e: any) {
+      toast.error(e.message);
+      console.error(e.message);
     }
   });
 

@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { signup } from 'api/firebase';
 
@@ -20,11 +21,12 @@ export default function SignupForm() {
     try {
       const user = await signup(data.email, data.password);
       if (user) {
+        toast(`🎉 Welcome to the Blog`, { theme: 'light' });
         navigate('/');
       }
-    } catch (errorMessage: any) {
-      console.error(errorMessage);
-      //auth/email-already-in-use
+    } catch (e: any) {
+      toast.error(e.message);
+      console.error(e.message);
     }
   });
 
