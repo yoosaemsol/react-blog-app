@@ -1,21 +1,27 @@
 import { useState } from 'react';
-
-import PostBox from 'components/PostBox';
-
-import styles from './PostList.module.css';
-import { useGetPosts } from 'hooks/api';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from 'context/AuthContext';
+import PostBox from 'components/PostBox';
+import { useGetPosts } from 'hooks/api';
+import styles from './PostList.module.css';
 
 interface PostListProps {
   onFilter?: boolean;
+  defaultFilter?: 'all' | 'my';
 }
 
 type FilterType = 'all' | 'my';
 
-export default function PostList({ onFilter = true }: PostListProps) {
-  const [activeFilter, setActiveFilter] = useState<FilterType>('all');
-
-  const { data: posts, isLoading } = useGetPosts();
+export default function PostList({
+  onFilter = true,
+  defaultFilter = 'all',
+}: PostListProps) {
+  const [activeFilter, setActiveFilter] = useState<FilterType>(defaultFilter);
+  const { user } = useAuthContext();
+  const userId = user?.email || '';
+  const { data: posts, isLoading } = useGetPosts({
+    userId: activeFilter === 'my' ? userId : undefined,
+  });
 
   if (isLoading) {
     <p>...loading</p>;

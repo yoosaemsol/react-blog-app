@@ -1,5 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { collection, getDocs, orderBy, query } from '@firebase/firestore';
+import {
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from '@firebase/firestore';
 import { db } from 'api/firebase';
 
 export interface PostProps {
@@ -11,13 +17,27 @@ export interface PostProps {
   email: string;
 }
 
-const useGetPosts = (options?: any) => {
+interface getPostQuery {
+  userId?: string;
+  category?: 'Frontend' | 'Backend' | 'Web' | 'Native';
+}
+
+const useGetPosts = (customQuery?: getPostQuery, options?: any) => {
   return useQuery<PostProps[], Error>(
-    ['posts'],
+    ['posts', customQuery],
     async () => {
       const postsRef = collection(db, 'posts');
 
-      const q = query(postsRef, orderBy('createdAt', 'desc'));
+      let q = query(postsRef, orderBy('createdAt', 'desc'));
+
+      if (customQuery?.userId) {
+        q = query(
+          postsRef,
+          where('email', '==', customQuery.userId),
+          orderBy('createdAt', 'desc')
+        );
+      }
+
       const data = await getDocs(q);
       const dataList: any[] = [];
 
