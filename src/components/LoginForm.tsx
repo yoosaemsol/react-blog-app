@@ -77,7 +77,7 @@ export default function LoginForm() {
         )}
       </div>
       <div className={styles.block}>
-        <p>
+        <p className={styles.message}>
           Don't you have an account?
           <Link className={styles.link} to="/signup">
             Sign up

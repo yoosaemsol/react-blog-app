@@ -7,6 +7,21 @@
   --color-text-level1: #696969;
   --color-blue: #2563eb;
   --color-white: #ffffff;
+  --color-bg: #ffffff;
+  --color-text: #22243b;
+}
+
+html.dark {
+  --color-active: #ffffff;
+  --color-warning: #ff4d4d;
+  --color-light-bg: #5c5c5c;
+  --color-border-light: lightgray;
+  --color-text-level0: #dddddd;
+  --color-text-level1: #bdbdbd;
+  --color-blue: #2563eb;
+  --color-white: #ffffff;
+  --color-bg: #292929;
+  --color-text: #ffffff;
 }
 
 body {
@@ -16,6 +31,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg);
+}
+
+#root {
+  transition: all 0.25s linear;
 }
 
 code {

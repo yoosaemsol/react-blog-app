@@ -105,7 +105,7 @@ export default function SignupForm() {
         )}
       </div>
       <div className={styles.block}>
-        <p>
+        <p className={styles.message}>
           Already have an account?{' '}
           <Link className={styles.link} to="/login">
             Login

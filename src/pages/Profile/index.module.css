@@ -24,11 +24,13 @@
 
 .email {
   font-weight: 500;
+  color: var(--color-text);
 }
 
 .username {
   font-size: 16px;
   padding-top: 4px;
+  color: var(--color-text);
 }
 
 .logoutBtn {

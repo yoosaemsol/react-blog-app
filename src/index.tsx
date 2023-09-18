@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from 'context/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { DarkModeContextProvider } from 'context/DarkModeContext';
 
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,12 +19,14 @@ const queryClient = new QueryClient();
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </AuthContextProvider>
-      <ToastContainer />
+      <DarkModeContextProvider>
+        <AuthContextProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </AuthContextProvider>
+        <ToastContainer />
+      </DarkModeContextProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );
