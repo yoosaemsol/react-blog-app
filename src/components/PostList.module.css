@@ -15,6 +15,7 @@
   padding: 2px 5px;
   width: fit-content;
   user-select: none;
+  color: var(--color-text);
 }
 
 .filterItem.active {
@@ -46,6 +47,10 @@
   color: var(--color-text-level0);
   border: 1px solid var(--color-border-light);
   border-radius: 20px;
+}
+
+.noPosts p {
+  color: var(--color-text);
 }
 
 .noPosts a {

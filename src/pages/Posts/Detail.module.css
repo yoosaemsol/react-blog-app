@@ -1,6 +1,7 @@
 .title {
   font-size: 36px;
   line-height: 40px;
+  color: var(--color-text);
 }
 
 .utilBox {
@@ -50,6 +51,7 @@
   padding: 20px 0px;
   line-height: 24px;
   white-space: pre-wrap;
+  color: var(--color-text);
 }
 
 .updatedAt {
