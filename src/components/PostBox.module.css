@@ -31,3 +31,9 @@
 .button:focus {
   color: var(--color-active);
 }
+
+@media (max-width: 500px) {
+  .button {
+    font-size: 12px;
+  }
+}

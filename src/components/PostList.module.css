@@ -9,6 +9,12 @@
   padding: 48px 20px 0px 20px;
 }
 
+.filterLeft,
+.filterRight {
+  display: flex;
+  gap: 8px;
+}
+
 .filterItem {
   cursor: pointer;
   box-sizing: content-box;
@@ -65,4 +71,20 @@
 .noPosts a:hover {
   background-color: var(--color-blue);
   color: var(--color-white);
+}
+
+@media (max-width: 500px) {
+  .filter {
+    flex-direction: column;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .postList {
+    padding: 0px;
+  }
 }

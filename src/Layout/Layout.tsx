@@ -9,7 +9,7 @@ export default function Layout() {
   const { user } = useAuthContext();
   const location = useLocation();
   const shouldHideFooter = FOOTERLESS_URL.some((url) => {
-    const pattern = new RegExp(`^${url.replace('/:id', '/\\d+')}$`);
+    const pattern = new RegExp(`^${url.replace(/\/:id/g, '/[^/]+')}$`);
     return pattern.test(location.pathname);
   });
 
