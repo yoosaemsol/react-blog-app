@@ -11,8 +11,10 @@ export default function AuthorProfile({
 }: AuthorProfileProps) {
   return (
     <div className={styles.profileBox}>
-      <div className={styles.avatar} />
-      <p className={styles.authorName}>{author}</p>
+      <div className={styles.profileLeft}>
+        <div className={styles.avatar} />
+        <p className={styles.authorName}>{author}</p>
+      </div>
       <p className={styles.postDate}>{formatTimestamp(createdAt)}</p>
     </div>
   );

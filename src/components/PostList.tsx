@@ -42,37 +42,41 @@ export default function PostList({
     <section>
       {onFilter && (
         <ul className={styles.filter}>
-          <li
-            role="presentation"
-            className={`${styles.filterItem}  ${
-              activeFilter === 'all' && styles.active
-            }`}
-            onClick={() => setActiveFilter('all')}
-          >
-            All
-          </li>
-          <li
-            role="presentation"
-            className={`${styles.filterItem}  ${
-              activeFilter === 'my' && styles.active
-            }`}
-            onClick={() => setActiveFilter('my')}
-          >
-            My Posts
-          </li>
-          <div className={styles.divider} />
-          {CATEGORIES?.map((category) => (
+          <div className={styles.filterLeft}>
             <li
-              key={category}
               role="presentation"
               className={`${styles.filterItem}  ${
-                activeFilter === category && styles.active
+                activeFilter === 'all' && styles.active
               }`}
-              onClick={() => setActiveFilter(category)}
+              onClick={() => setActiveFilter('all')}
             >
-              {category}
+              All
             </li>
-          ))}
+            <li
+              role="presentation"
+              className={`${styles.filterItem}  ${
+                activeFilter === 'my' && styles.active
+              }`}
+              onClick={() => setActiveFilter('my')}
+            >
+              My Posts
+            </li>
+          </div>
+          <div className={styles.divider} />
+          <div className={styles.filterRight}>
+            {CATEGORIES?.map((category) => (
+              <li
+                key={category}
+                role="presentation"
+                className={`${styles.filterItem}  ${
+                  activeFilter === category && styles.active
+                }`}
+                onClick={() => setActiveFilter(category)}
+              >
+                {category}
+              </li>
+            ))}
+          </div>
         </ul>
       )}
       {!!posts?.length && (
